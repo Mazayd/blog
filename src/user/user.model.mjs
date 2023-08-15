@@ -43,6 +43,9 @@ export class UserModel {
   async getUser(nickName) {
     return await User.findOne({ nickName: nickName });
   }
+  async getUserByTgId(tgId) {
+    return await User.findOne({ telegramId: tgId });
+  }
   async getUsers(name) {
     return await User.find({ name: name }).limit(10);
   }
