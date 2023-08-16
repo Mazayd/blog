@@ -45,7 +45,6 @@ export class PostController {
   async getPostByUserId(req, res) {
     try {
       const { user_id } = req.params;
-      console.log(user_id);
       const posts = await this.postModel.getPostsByUserId(user_id);
       if (posts.length === 0) {
         return res
@@ -53,6 +52,55 @@ export class PostController {
           .send({ message: "Post not found", success: false });
       }
       res.status(200).send(posts);
+    } catch (err) {
+      res.status(400).send({ err: err });
+    }
+  }
+  async updatePost(req, res) {
+    try {
+      const { post_id, user_tg_id } = req.params;
+      const { content, hashtags } = req.body;
+      const post = await this.postModel.getPost(post_id);
+      if (!post) {
+        return res
+          .status(404)
+          .send({ message: "Post not found", success: false });
+      }
+      const user = await this.userModel.getUserByTgId(user_tg_id);
+      if (post.user.toString() !== user._id.toString()) {
+        return res.status(400).send({
+          message: "You cannot edit other people's posts.",
+          success: false,
+        });
+      }
+      const result = await this.postModel.updatePost(post_id, {
+        content,
+        hashtags,
+        dateOfUpdate: new Date(),
+      });
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(400).send({ err: err });
+    }
+  }
+  async deletePost(req, res) {
+    try {
+      const { post_id, user_tg_id } = req.params;
+      const post = await this.postModel.getPost(post_id);
+      if (!post) {
+        return res
+          .status(404)
+          .send({ message: "Post not found", success: false });
+      }
+      const user = await this.userModel.getUserByTgId(user_tg_id);
+      if (post.user.toString() !== user._id.toString()) {
+        return res.status(400).send({
+          message: "You cannot delete other people's posts.",
+          success: false,
+        });
+      }
+      const result = await this.postModel.deletePost(post_id);
+      res.status(200).send(result);
     } catch (err) {
       res.status(400).send({ err: err });
     }

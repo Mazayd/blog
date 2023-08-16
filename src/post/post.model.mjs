@@ -2,13 +2,6 @@ import mongoose from "mongoose";
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const LikesSchema = new mongoose.Schema({
-  user: {
-    required: true,
-    type: ObjectId,
-  },
-});
-
 const PostSchema = new mongoose.Schema({
   user: {
     required: true,
@@ -24,11 +17,11 @@ const PostSchema = new mongoose.Schema({
   },
   comments: {
     required: false,
-    type: [ObjectId],
+    type: [String],
   },
   likes: {
     required: false,
-    type: [LikesSchema],
+    type: [String],
   },
   numberOfLikes: {
     default: 0,
@@ -59,5 +52,11 @@ export class PostModel {
   }
   async getPostsByUserId(id) {
     return await Post.find({ user: id });
+  }
+  async updatePost(id, data) {
+    return await Post.findOneAndUpdate({ _id: id }, data, { new: true });
+  }
+  async deletePost(id) {
+    return await Post.findOneAndDelete({ _id: id });
   }
 }

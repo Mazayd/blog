@@ -12,5 +12,13 @@ PostRouter.get(
   "/user/:user_id",
   postController.getPostByUserId.bind(postController)
 );
+PostRouter.patch(
+  "/:post_id/:user_tg_id",
+  postController.updatePost.bind(postController)
+);
+PostRouter.delete(
+  "/:post_id/:user_tg_id",
+  postController.deletePost.bind(postController)
+);
 
 export { PostRouter };
