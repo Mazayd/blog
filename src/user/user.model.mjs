@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     type: Number,
   },
   sex: {
-    required: true,
+    required: false,
     type: String,
   },
   telegramId: {

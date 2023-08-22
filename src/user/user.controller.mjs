@@ -59,6 +59,20 @@ export class UserController {
       res.status(400).send({ err: err });
     }
   }
+  async getUserByTgId(req, res) {
+    try {
+      const { telegram_id } = req.params;
+      const result = await this.userModel.getUserByTgId(telegram_id);
+      if (!result) {
+        return res
+          .status(404)
+          .send({ message: "User not found", success: false });
+      }
+      res.status(200).send(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async getUsers(req, res) {
     try {
       const { name } = req.params;

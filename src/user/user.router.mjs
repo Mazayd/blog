@@ -12,6 +12,10 @@ UserRouter.patch(
 );
 UserRouter.get("/:nick_name", userController.getUser.bind(userController));
 UserRouter.get("/many/:name", userController.getUsers.bind(userController));
+UserRouter.get(
+  "/telegram_id/:telegram_id",
+  userController.getUserByTgId.bind(userController)
+);
 UserRouter.delete("/", userController.deleteUsers.bind(userController));
 UserRouter.delete(
   "/:user_tg_id",
