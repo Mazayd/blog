@@ -16,6 +16,7 @@ export class UserController {
       const result = await this.userModel.createUser(newUser);
       res.status(200).send(result);
     } catch (err) {
+      console.log("err :>> ", err);
       res.status(400).send({ err: err });
     }
   }
@@ -63,11 +64,6 @@ export class UserController {
     try {
       const { telegram_id } = req.params;
       const result = await this.userModel.getUserByTgId(telegram_id);
-      if (!result) {
-        return res
-          .status(404)
-          .send({ message: "User not found", success: false });
-      }
       res.status(200).send(result);
     } catch (err) {
       console.log(err);
@@ -77,12 +73,6 @@ export class UserController {
     try {
       const { name } = req.params;
       const result = await this.userModel.getUsers(name);
-      if (result.length === 0) {
-        return res.status(404).send({
-          message: "A user with this name does not exist.",
-          success: false,
-        });
-      }
       res.status(200).send(result);
     } catch (err) {
       res.status(400).send({ err: err });
@@ -101,11 +91,6 @@ export class UserController {
     try {
       const { user_tg_id } = req.params;
       const result = await this.userModel.deleteUser(user_tg_id);
-      if (!result) {
-        return res
-          .status(403)
-          .send({ message: "Such user does not exist.", success: false });
-      }
       res.status(200).send(result);
     } catch (err) {
       res.status(400).send({ err: err });

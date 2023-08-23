@@ -32,11 +32,6 @@ export class PostController {
     try {
       const { hashtags } = req.body;
       const posts = await this.postModel.getPostsByHashtags(hashtags);
-      if (posts.length === 0) {
-        return res
-          .status(404)
-          .send({ message: "Post not found", success: false });
-      }
       res.status(200).send(posts);
     } catch (err) {
       res.status(400).send({ err: err });
@@ -46,11 +41,6 @@ export class PostController {
     try {
       const { user_id } = req.params;
       const posts = await this.postModel.getPostsByUserId(user_id);
-      if (posts.length === 0) {
-        return res
-          .status(404)
-          .send({ message: "Post not found", success: false });
-      }
       res.status(200).send(posts);
     } catch (err) {
       res.status(400).send({ err: err });
