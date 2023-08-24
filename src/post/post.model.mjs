@@ -51,7 +51,7 @@ export class PostModel {
     return await Post.find({ hashtags: { $in: hashtags } });
   }
   async getPostsByUserId(id) {
-    return await Post.find({ user: id });
+    return await Post.findOne({ user: id }).sort({ dataOfCreation: -1 });
   }
   async updatePost(id, data) {
     return await Post.findOneAndUpdate({ _id: id }, data, { new: true });

@@ -21,8 +21,9 @@ export class PostController {
   }
   async getPost(req, res) {
     try {
-      const { post_id } = req.params;
-      const post = await this.postModel.getPost(post_id);
+      const { telegram_id } = req.params;
+      const user = await this.userModel.getUserByTgId(telegram_id);
+      const post = await this.postModel.getPostsByUserId(user._id);
       res.status(200).send(post);
     } catch (err) {
       res.status(400).send({ err: err });
