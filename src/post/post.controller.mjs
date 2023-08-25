@@ -22,6 +22,20 @@ export class PostController {
       res.status(400).send({ err: err });
     }
   }
+  async getPostById(req, res) {
+    try {
+      const { post_id } = req.params;
+      const post = await this.postModel.getPost(post_id);
+      if (!post) {
+        return res
+          .status(404)
+          .send({ message: "Post not found", success: false });
+      }
+      res.status(200).send(post);
+    } catch (err) {
+      res.status(400).send({ err: err });
+    }
+  }
   async getPost(req, res) {
     try {
       const { telegram_id } = req.params;
