@@ -25,8 +25,8 @@ export class CommentController {
         content: content,
       });
       const newComment = [
-        ...(post.comments || []),
         result._id.toString() || [],
+        ...(post.comments || []),
       ];
       const updatePost = await this.postModel.updatePost(post_id, {
         comments: newComment,

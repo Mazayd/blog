@@ -12,9 +12,12 @@ export class PostController {
       const dataPost = req.body;
       const user = await this.userModel.getUserByTgId(user_tg_id);
       dataPost.user = user._id;
-      console.log(user);
-      const newPost = await this.postModel.createPost(dataPost);
-      res.status(200).send(newPost);
+      const result = await this.postModel.createPost(dataPost);
+      const newPost = [result._id.toString() || [], ...(user.posts || [])];
+      await this.userModel.updateUser(user_tg_id, {
+        posts: newPost,
+      });
+      res.status(200).send(result);
     } catch (err) {
       res.status(400).send({ err: err });
     }

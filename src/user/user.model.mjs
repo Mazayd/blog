@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  posts: {
+    required: false,
+    type: [String],
+  },
   dateOfCreation: {
     required: true,
     type: Date,
