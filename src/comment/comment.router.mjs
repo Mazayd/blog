@@ -12,6 +12,10 @@ CommentRouter.get(
   "/:post_id",
   commentController.getComments.bind(commentController)
 );
+CommentRouter.get(
+  "/one/:comment_id",
+  commentController.getCommentById.bind(commentController)
+);
 CommentRouter.patch(
   "/:user_tg_id/:comment_id",
   commentController.updateComments.bind(commentController)

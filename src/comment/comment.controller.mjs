@@ -46,6 +46,15 @@ export class CommentController {
       res.status(400).send({ err: err });
     }
   }
+  async getCommentById(req, res) {
+    try {
+      const { comment_id } = req.params;
+      const result = await this.commentModel.getComment(comment_id);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(400).send({ err: err });
+    }
+  }
   async updateComments(req, res) {
     try {
       const { comment_id, user_tg_id } = req.params;
