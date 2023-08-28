@@ -44,6 +44,9 @@ export class UserModel {
   async createUser(user) {
     return await User.create(user);
   }
+  async getUserById(id) {
+    return await User.findById(id);
+  }
   async getUser(nickName) {
     return await User.findOne({ nickName: nickName });
   }

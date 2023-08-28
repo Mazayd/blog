@@ -46,6 +46,15 @@ export class UserController {
       res.status(400).send({ err: err });
     }
   }
+  async getUserById(req, res) {
+    try {
+      const { user_id } = req.params;
+      const result = await this.userModel.getUserById(user_id);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(400).send({ err: err });
+    }
+  }
   async getUser(req, res) {
     try {
       const { nick_name } = req.params;

@@ -16,6 +16,10 @@ UserRouter.get(
   "/telegram_id/:telegram_id",
   userController.getUserByTgId.bind(userController)
 );
+UserRouter.get(
+  "/one/:user_id",
+  userController.getUserById.bind(userController)
+);
 UserRouter.delete("/", userController.deleteUsers.bind(userController));
 UserRouter.delete(
   "/:user_tg_id",
