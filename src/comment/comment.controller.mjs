@@ -101,6 +101,12 @@ export class CommentController {
           success: false,
         });
       }
+      await this.postModel.updatePost(comment.post, {
+        comments: post.comments.filter((item) => {
+          if (item !== comment_id) return true;
+          else return false;
+        }),
+      });
       const result = await this.commentModel.deleteComment(comment_id);
       res.status(200).send(result);
     } catch (err) {
