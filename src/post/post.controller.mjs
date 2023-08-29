@@ -107,6 +107,12 @@ export class PostController {
           success: false,
         });
       }
+      await this.userModel.updateUser(user_tg_id, {
+        posts: user.posts.filter((item) => {
+          if (item !== post_id) return true;
+          else return false;
+        }),
+      });
       const result = await this.postModel.deletePost(post_id);
       res.status(200).send(result);
     } catch (err) {
